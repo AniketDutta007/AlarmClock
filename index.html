@@ -6,8 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Alarm Clock</title>
         <link rel="stylesheet" href="assets/css/style.css">
+
+        <link href='https://css.gg/alarm.css' rel='stylesheet'>
     </head>
     <body>
+        <div class="ring__alarm">
+            It's Time!!!
+        </div>
         <div class="current__date__time__container">
             <div class="current__time">
                 <div class="time" id="hr">
@@ -25,6 +30,18 @@
             <div class="current__date">
                 <div id="weekday">Thursday</div>
                 <div id="date">01/01/1970</div>
+            </div>
+        </div>
+        <div class="set__alarm">
+            <div class="input__field" id="set__hour">
+                <input type="number" name="hour" id="input__hour"/>
+            </div>
+            <div class="colon">:</div>
+            <div class="input__field" id="set__minute">
+                <input type="number" name="minute" id="input__minute"/>
+            </div>
+            <div id="set__button">
+                <button id="set">Set Alarm</button>
             </div>
         </div>
         <script src="assets/js/script.js"></script>
