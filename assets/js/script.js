@@ -5,8 +5,14 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 //flag variables to keep a check for proper input before submission
 let hrFlag = false;
 let minFlag = false;
+let ringFlag = false;
+let ringAlarmCounter = null;
 //function to store the alarm times
 let alarms = new Array();
+//id of the last inserted alarm
+let id = 1;
+//get the audio player for playing alarm ringtone
+let player = document.getElementById('player');
 //function to get & set current time to the time object
 function init(){
     date = new Date();//get current date and time from the date object
@@ -52,26 +58,57 @@ function toggleSetBtn(){
 }
 //function to validate the alarm time
 function verifyTime(hr,min){
-    if(hr>=0&&hr<=23&&min>=0&&min<=59){
-        return true;
-    } else{
-        return false;
-    }
+    return hr>=0&&hr<=23&&min>=0&&min<=59;
 }
+//function to check if any alarms time matches with the present time
 function isItTime(){
     console.log('isItTime running');
-    let alarmFlag = false;
+    let alarmFlag = false;//flag variable to check if alarm time match with current time
+    let alarmId = 0;//to store the id of the alarm fulfilled
     alarms.forEach(alarm => {
         if(alarm.hour==date.getHours()&&alarm.minute==date.getMinutes()){
+            alarmId = alarm.id;
             alarmFlag = true;
         }
     });
-    if(alarmFlag){
+    if(alarmFlag){//ring alarm on time i.e if the any alarm time matches with the current time
+        deleteAlarmObject(alarmId);//delete the alarm which is on time from the array of objects
+        deleteAlarmView(alarmId);//delete the alarm which is on time from the list of views
+        //ring the alarm for 1min
+        ringFlag = true;
         document.getElementsByClassName('ring__alarm')[0].classList.add('show');
-        setTimeout(() => {
-            document.getElementsByClassName('ring__alarm')[0].classList.remove('show');
-        },60*1000);
+        player.play();
+        ringAlarmCounter = setTimeout(() => {
+                            console.log('auto stop!!!');
+                            player.pause();
+                            player.currentTime = 0;
+                            document.getElementsByClassName('ring__alarm')[0].classList.remove('show');
+                        },60000);
     }
+}
+//function to create alarm view
+function createAlarm(){
+    document.getElementsByClassName('alarms__list')[0].innerHTML+= '<div class="alarm" id="'+alarms[(alarms.length-1)].id+'"><div class="alarm__time"><div class="alarm__hr">'+(alarms[(alarms.length-1)].hour<10?'0':'')+alarms[(alarms.length-1)].hour+'</div>&nbsp;&nbsp;:&nbsp;&nbsp;<div class="alarm__min">'+(alarms[(alarms.length-1)].minute<10?'0':'')+alarms[(alarms.length-1)].minute+'</div></div><button class="delete__alarm" onclick="removeAlarm(event);"><i class="fas fa-trash" id="'+alarms[(alarms.length-1)].id+'"></i></button></div>';
+}
+//function to delete alarm from the list of alarms
+function deleteAlarmObject(id){
+    let index = 0;
+    for(; index<alarms.length; index++){
+        if(id==alarms[index].id){
+            break;
+        }
+    }
+    alarms.splice(index,1);//remove the element at index
+}
+//function to delete alarm from the list of alarm views
+function deleteAlarmView(id){
+    document.getElementById(''+id).remove();
+}
+//function to delete alarm
+function removeAlarm(event){
+    let id = parseInt(event.target.id);
+    deleteAlarmObject(id);
+    deleteAlarmView(id);
 }
 //eventlistener for the input hour field
 document.getElementById('input__hour').addEventListener('keypress',(event) =>{
@@ -84,6 +121,7 @@ document.getElementById('input__hour').addEventListener('keypress',(event) =>{
         toggleSetBtn();
     }
 });
+//eventlistener for the input hour field to register the backspace event
 document.getElementById('input__hour').addEventListener('keydown',(event) =>{
     let hr = getAlarmHour();
     if(hr.length==1&&event.keyCode==8){
@@ -102,6 +140,7 @@ document.getElementById('input__minute').addEventListener('keypress',(event) => 
         toggleSetBtn();
     }
 });
+//eventlistener for the input minute field to register the backspace event
 document.getElementById('input__minute').addEventListener('keydown',(event) =>{
     let min = getAlarmMinute();
     if(min.length==1&&event.keyCode==8){
@@ -111,27 +150,38 @@ document.getElementById('input__minute').addEventListener('keydown',(event) =>{
 });
 //eventlistener for the set alarm button
 document.getElementById('set').addEventListener('click',() => {
-    let hr = parseInt(getAlarmHour());
-    let min = parseInt(getAlarmMinute());
+    let hr = parseInt(getAlarmHour());//to get the input alarm hour from the input field
+    let min = parseInt(getAlarmMinute());//to get the input alarm minute from the input field
     if(verifyTime(hr,min)){//verify the input time before processing further
-        console.log(`hrFlag : ${hrFlag}, minFlag : ${minFlag}`);
-        console.log(`Alarm Set : ${hr}:${min}`);
-        alarms.push({
+        alarms.push({//push the new alarm object into the array of alarms
+            id: id,
             hour: hr,
             minute: min
         });
-    } else{
+        createAlarm();//create the alarm view
+        id++;//increment the id
+        document.getElementById('input__hour').value = '';
+        document.getElementById('input__minute').value = '';
+    } else{//incase of invalid input
         alert('Invalid Time Set!');
     }
 });
+//eventlistener to turn off the ringing alarm
+document.getElementById('cancel').addEventListener('click',() => {
+    console.log('cancel is clicked!');
+    clearTimeout(ringAlarmCounter);
+    player.pause();
+    player.currentTime = 0;
+    document.getElementsByClassName('ring__alarm')[0].classList.remove('show');
+});
 function start(){
     init();//function to initialize the date object and set the present data in the HTML
-    setInterval(() => {
-        date.setSeconds(date.getSeconds()+1);
-        setHours();
-        setMinutes();
-        setSeconds();
-        if(date.getSeconds()==0)
+    setInterval(() => {//counter function
+        date.setSeconds(date.getSeconds()+1);//increase time by one second
+        setHours();//set the new hour
+        setMinutes();//set the new minute
+        setSeconds();//set the new second
+        if(date.getSeconds()==0)//at interval of one minute it checks if the alarm must ring
             isItTime();
     }, 1000);
 }

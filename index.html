@@ -7,11 +7,25 @@
         <title>Alarm Clock</title>
         <link rel="stylesheet" href="assets/css/style.css">
 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
         <link href='https://css.gg/alarm.css' rel='stylesheet'>
+        <link href='https://css.gg/trash-empty.css' rel='stylesheet'>
+
     </head>
     <body>
         <div class="ring__alarm">
-            It's Time!!!
+            <audio src="assets\music\love-nwantiti-ringtone-download.mp3" type="audio/mpeg" id="player" style="display: none;"></audio>
+            <div id="clock">
+                <!-- <i class="gg-alarm"></i> -->
+                <i class="fas fa-stopwatch"></i>
+            </div>
+            <div id="message">
+                It's already time!!!
+            </div>
+            <button id="cancel">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="current__date__time__container">
             <div class="current__time">
@@ -43,6 +57,18 @@
             <div id="set__button">
                 <button id="set">Set Alarm</button>
             </div>
+        </div>
+        <div class="alarms__list">
+            <!-- <div class="alarm" id="0">
+                <div class="alarm__time">
+                    <div class="alarm__hr">10</div>
+                    &nbsp;&nbsp;:&nbsp;&nbsp;
+                    <div class="alarm__min">30</div>
+                </div>
+                <button class="delete__alarm" id="0" onclick="removeAlarm(event);">
+                    <i class="gg-trash"></i>
+                </button>
+            </div> -->
         </div>
         <script src="assets/js/script.js"></script>
     </body>
