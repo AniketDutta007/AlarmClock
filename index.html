@@ -9,55 +9,70 @@
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-        <link href='https://css.gg/alarm.css' rel='stylesheet'>
         <link href='https://css.gg/trash-empty.css' rel='stylesheet'>
 
     </head>
     <body>
+        <!-- Ring Alarm View -->
         <div class="ring__alarm">
+            <!-- Audio Player For Alarm -->
             <audio src="assets\music\love-nwantiti-ringtone-download.mp3" type="audio/mpeg" id="player" style="display: none;"></audio>
             <div id="clock">
-                <!-- <i class="gg-alarm"></i> -->
                 <i class="fas fa-stopwatch"></i>
             </div>
+            <!-- Alarm Message -->
             <div id="message">
                 It's already time!!!
             </div>
+            <!-- Alarm Cancel Button -->
             <button id="cancel">
                 <i class="fas fa-times"></i>
             </button>
         </div>
+        <!-- Current Date & Time View -->
         <div class="current__date__time__container">
+            <!-- Current Time View -->
             <div class="current__time">
+                <!-- Current Hour -->
                 <div class="time" id="hr">
                     <span class="digits">00</span>
                 </div>
                 <div class="colon">:</div>
+                <!-- Current Minute -->
                 <div class="time" id="min">
                     <span class="digits">00</span>
                 </div>
                 <div class="colon">:</div>
+                <!-- Current Second -->
                 <div class="time" id="sec">
                     <span class="digits">00</span>
                 </div>
             </div>
+            <!-- Current Date View -->
             <div class="current__date">
+                <!-- Current Weekday -->
                 <div id="weekday">Thursday</div>
+                <!-- Current Date -->
                 <div id="date">01/01/1970</div>
             </div>
         </div>
+        <!-- Set Alarm View -->
         <div class="set__alarm">
+            <!-- Input Alarm Hour -->
             <div class="input__field" id="set__hour">
                 <input type="number" name="hour" id="input__hour"/>
             </div>
             <div class="colon">:</div>
+            <!-- Input Alarm Minute -->
             <div class="input__field" id="set__minute">
                 <input type="number" name="minute" id="input__minute"/>
             </div>
+            <!-- Set Alarm Button -->
             <div id="set__button">
                 <button id="set">Set Alarm</button>
             </div>
         </div>
+        <!-- List of Alarms -->
         <div class="alarms__list">
             <!-- <div class="alarm" id="0">
                 <div class="alarm__time">

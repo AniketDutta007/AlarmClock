@@ -185,4 +185,4 @@ function start(){
             isItTime();
     }, 1000);
 }
-start();
+start();//start the alarm
