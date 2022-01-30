@@ -12,12 +12,12 @@ The website is fully responsive and the files are well structured for ease to ot
 
 ## Screenshots of website on different devices
 * Desktop/Laptop View
-<img src="assets\screenshots\desktop_view.png">
+<img src="assets\screenshots\desktop_view.png" height="500">
 <br />
 
 * Tablet View
-<img src="assets\screenshots\tablet_view.png">
+<img src="assets\screenshots\tablet_view.png" height="500">
 <br />
 
 * Mobile View
-<img src="assets\screenshots\mobile_view.png">
+<img src="assets\screenshots\mobile_view.png" height="500">
